@@ -8,24 +8,29 @@ x = data[0:, 3]#hp
 y = data[0:, 0]#mpg
 z = data[0:, 5]#wt
 
-'''''
-print(x)
-print()
-print(y)
-
-'''''
-
-#print(z)
-
 plt.xlabel('Horse Power')
 plt.ylabel('Miles per Gallon')
 plt.title("Zadatak 2")
-plt.scatter(x, y, c="green", marker="s", s = 10)
+plt.scatter(x, y, c = "indigo", marker="*", s = z * 50, label = "mpg/hp")
 
-plt.plot(kind='scatter', label = "Weight(lbs/1000)", color='red')
-plt.legend(bbox_to_anchor = (0.75, 1.15), ncol = 2)
+plt.plot(kind = "scatter", label = "Weight(lbs/1000)", color = "red")
+plt.legend()
 plt.show()
 
-#mpg o hp
-#wt bojano po velicini
+print("Min, max i suma")
+print(min(y))
+print(max(y))
+print(sum(y) / len(y))
+print()
+
+a=[]
+
+for i in range(len(y)):
+    if data[i, 1] == 6:
+        a.append(data[i, 0])
+
+print("Min, max i suma 6 cilindara")
+print(min(a))
+print(max(a))
+print(sum(a) / len(a))
 
