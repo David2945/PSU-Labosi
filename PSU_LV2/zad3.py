@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 
 from scipy.interpolate import RegularGridInterpolator
 
-#og size: 960x640
+#default size: 960x640
 #funkcija sa neta za promjenu rezolucije slike
 def regrid(data, out_x, out_y):
     m = max(data.shape[0], data.shape[1])
@@ -18,17 +18,34 @@ def regrid(data, out_x, out_y):
 
 img = plt.imread("tiger.png")
 img = img[:,:,0].copy()
-print(img.shape)
-print(img.dtype)
+#print(img.shape)
+#print(img.dtype)
 
-#brightness?
+#b)
+img1 = np.rot90(img, 3) #zarotirana slika
 
-img2 = np.rot90(img,3) #zakrenuta slika
+#c)
+img2 = np.fliplr(img) #zrcaljena slika
 
-img3 = np.fliplr(img) #zrcaljena slika
+#d)
+img3 = regrid(img, 96, 64) #rezolucija smanjena 10 puta - default rezolucija je 960x640
 
-img4 = regrid(img, 100, 500) #promijenjena rezolucija slike
+#e)
+left1, right1 = np.hsplit(img, [480])
+prva_cetvrtina, druga_cetvrtina = np.hsplit(left1, [240])
+
+arr_zeros = np.zeros((640, 240))#cetvrtina - crnilo
+arr_zeros2 = np.hstack((arr_zeros, arr_zeros))#polovina - crnilo
+
+img4 = np.hstack((arr_zeros, druga_cetvrtina))
+img4 = np.hstack((img4, arr_zeros2))
+
 
 plt.figure()
-plt.imshow(img, cmap="gray")
+#plt.imshow(img4, cmap="gray")
+
+#a)
+#plt.imshow(img, cmap="gray", vmin = -1, vmax = 1) #povećan brightness - vmin mijenjamo u neg smjeru, vmax ostaje 1
+plt.imshow(img, cmap="gray", vmin = 0, vmax = 10) #smanjen brightness - vmax mijennjamo u pozitivnom smjeru, vmin ostaje 0
+
 plt.show()
